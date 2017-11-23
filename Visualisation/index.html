@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<head>
+	<script type = "text/javascript" src = "https://d3js.org/d3.v4.js"></script>
+	<script type = "text/javascript" src = "functions.js"></script>
+</head>
+<body>
+	<style>
+		path { stroke: rgb(240, 240, 240); }
+		circle { stroke: #FFFFFF; fill: none; }
+
+		.ManUnited { stroke: rgb(166,25,25); } 
+		.Chelsea { stroke: rgb(46,76,102);	} 
+		.Arsenal { stroke: rgb(178,120,54); } 
+		.Leicester { stroke: rgb(31,204,77); } 	
+		.ManCity { stroke: rgb(31,204,192); }	
+		.Tottenham { stroke: rgb(125,115,191); }		
+		.Liverpool { stroke: rgb(178,117,107); } 	
+		
+		.AstonVilla { stroke: rgb(102,31,97); } 	
+		.Blackburn { stroke: rgb(61,102,94); }	
+		.Bolton { stroke: rgb(31,40,102); }		
+		.Everton { stroke: rgb(102,40,31); }	
+		.Leeds { stroke: rgb(166,158,50); }		
+		.Newcastle { stroke: rgb(102,94,61); } 	
+		.WestHam { stroke: rgb(191,29,159); }	
+		
+		.x-axis line { stroke: #ADADDA; }
+		.x-axis path { stroke: #ADADDA; }
+		.x-axis text { fill: #ADADDA; }
+
+	</style>
+	<script>
+		const N = 6, WIDTH = 640, HEIGHT = 400, SPEED = 1.5, SCREENHOURS = 10000;
+		var firstDay, lastDat, endDay, margin, width, height;
+		var mainContainer, plotArea, xScale, yScale, clipPath;
+		var svg = d3.select("body").append("svg")
+			.attr("width", WIDTH)
+			.attr("height", HEIGHT);
+
+		drawBackground();
+
+		d3.csv("premier_elo.csv", function(data) {
+			formatData(data);
+			setVariables(data);
+			createContainers();
+			createCircles();
+			createTexts();
+			createScales();
+			createPaths(data);
+
+			d3.timer(function(elapsed) {
+				updatePaths(elapsed);
+				updateCircles(elapsed, data);
+			});
+		})
+
+
+	</script>
+</body>
